@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/cocoapods/l/VBotSIP.svg?style=flat)](https://opensource.org/licenses/GPL-3.0)
 [![Platform](https://img.shields.io/cocoapods/p/VBotSIP.svg?style=flat)](https://cocoapods.org/pods/VBotSIP)
 
-We've created a better wrapper for the PJSIP library.
+A wrapper for the PJSIP library.
 
 ## Usage
 
