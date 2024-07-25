@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
 	s.license          	= 'GNU GPL v3'
 	s.author           	= {"Dat Nguyen Quoc" => "datnq@vpmedia.vn"}
 
-	s.source           	= {:git => "https://github.com/qdatt/VBotSIP.git", :tag => s.version.to_s}
+	s.source           	= {:git => "https://github.com/VBotDevTeam/VBotSIP", :tag => s.version.to_s}
 	s.social_media_url 	= "https://vbot.vn"
 
 	s.platform     		= :ios, '13.5'
@@ -32,5 +32,9 @@ Pod::Spec.new do |s|
 	s.dependency 'Vialer-pjsip-iOS'
 	s.dependency 'CocoaLumberjack'
 
-  	s.xcconfig = {'GCC_PREPROCESSOR_DEFINITIONS' => 'PJ_AUTOCONF=1'}
+
+	s.ios.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+	s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+
+	s.xcconfig = {'GCC_PREPROCESSOR_DEFINITIONS' => 'PJ_AUTOCONF=1'}
 end
