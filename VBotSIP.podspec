@@ -31,11 +31,12 @@ Pod::Spec.new do |s|
 
 	s.dependency 'Vialer-pjsip-iOS'
 	s.dependency 'CocoaLumberjack'
-	s.vendored_frameworks = 'VialerPJSIP.framework'
 	s.static_framework = true
 
 	s.ios.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
 	s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
-
+	s.pod_target_xcconfig = {
+  'OTHER_CFLAGS' => '-Wno-non-modular-include-in-framework-module'
+}
 	s.xcconfig = {'GCC_PREPROCESSOR_DEFINITIONS' => 'PJ_AUTOCONF=1'}
 end
