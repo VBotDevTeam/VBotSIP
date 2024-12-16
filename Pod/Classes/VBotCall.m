@@ -95,7 +95,7 @@ NSString * const VBotCallErrorDuringSetupCallNotification = @"VBotCallErrorDurin
 
 - (instancetype)initOutboundCallWithNumberToCall:(NSString *)number account:(VBotAccount *)account {
     if (self = [self initPrivateWithAccount:account]) {
-        self.numberToCall = [VBotUtils cleanPhoneNumber:number];
+        self.numberToCall = number;
     }
     return self;
 }
@@ -497,31 +497,30 @@ NSString * const VBotCallErrorDuringSetupCallNotification = @"VBotCallErrorDurin
         if ([VBotEndpoint sharedEndpoint].endpointConfiguration.disableVideoSupport) {
             callSetting.vid_cnt = 0;
         }
-
         status = pjsua_call_answer2((int)self.callId, &callSetting, PJSIP_SC_OK, NULL, NULL);
 
         if (status != PJ_SUCCESS) {
             char statusmsg[PJ_ERR_MSG_SIZE];
             pj_strerror(status, statusmsg, sizeof(statusmsg));
-            VBotLogError(@"Could not answer call PJSIP returned status: %s", statusmsg);
 
-            NSError *error = [NSError VBotUnderlyingError:nil
-                                 localizedDescriptionKey:NSLocalizedString(@"Could not answer call", nil)
-                             localizedFailureReasonError:[NSString stringWithFormat:NSLocalizedString(@"PJSIP status code: %d", nil), status]
-                                             errorDomain:VBotCallErrorDomain
-                                               errorCode:VBotCallErrorCannotAnswerCall];
+            NSError *error = [NSError errorWithDomain:VBotCallErrorDomain
+                                                 code:VBotCallErrorCannotAnswerCall
+                                             userInfo:@{
+                                                 NSLocalizedDescriptionKey: @"Could not answer call",
+                                                 NSLocalizedFailureReasonErrorKey: [NSString stringWithFormat:@"PJSIP status code: %d", status]
+                                             }];
             completion(error);
         } else {
             completion(nil);
         }
-
     } else {
-        VBotLogError(@"Could not answer call, PJSIP indicated callId(%ld) as invalid", (long)self.callId);
-        NSError *error = [NSError VBotUnderlyingError:nil
-                             localizedDescriptionKey:NSLocalizedString(@"Could not answer call", nil)
-                         localizedFailureReasonError:[NSString stringWithFormat:NSLocalizedString(@"Call Id: %d invalid", nil), self.callId]
-                                         errorDomain:VBotCallErrorDomain
-                                           errorCode:VBotCallErrorCannotAnswerCall];
+        NSLog(@"callId không hợp lệ");
+        NSError *error = [NSError errorWithDomain:VBotCallErrorDomain
+                                             code:VBotCallErrorCannotAnswerCall
+                                         userInfo:@{
+                                             NSLocalizedDescriptionKey: @"Could not answer calli",
+                                             NSLocalizedFailureReasonErrorKey: @"callId là PJSUA_INVALID_ID"
+                                         }];
         completion(error);
     }
 }

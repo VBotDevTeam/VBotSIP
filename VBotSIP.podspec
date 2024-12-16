@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
 	s.name             	= "VBotSIP"
-	s.version          	= "1.2.0"
+	s.version          	= "1.2.1"
 	s.summary          	= "VBot SIP Library for iOS"
 	s.description      	= "Objective-C wrapper around PJSIP."
 	s.homepage         	= "https://vbot.vn"
